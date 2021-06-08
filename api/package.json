@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -L",
+    "start": "nodemon index.js",
     "test": "mocha -w ./tests/**/*.spec.js"
   },
   "author": "Henry",
@@ -18,15 +18,15 @@
     "ioredis": "^4.19.2",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
-    "pg": "^8.5.1",
-    "sequelize": "^6.3.5"
+    "pg": "^8.6.0",
+    "sequelize": "^6.6.2"
   },
   "devDependencies": {
-    "supertest-session": "^4.1.0",
-    "mocha": "^8.2.1",
     "chai": "^4.2.0",
-    "nodemon": "^2.0.6",
-    "supertest": "^6.0.1"
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.0.1",
+    "supertest-session": "^4.1.0"
   },
   "directories": {
     "test": "tests"
