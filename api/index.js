@@ -19,7 +19,24 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-  
+const { Type } = require('./src/db');
+const {BASE_URL} = require("./constants")
+const axios = require("axios");
+
+async function setType(){ 
+   const apitype = await axios.get(`${BASE_URL}type`)
+      await Promise.all(apitype.data.results.map((type, index)=>{
+          let pkmntype = {
+              id: ++index,
+              name: type.name
+          }
+          Type.findOrCreate({where: pkmntype})
+      }))
+    }
+setType();
+console.log("db cargada")
+
+
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {

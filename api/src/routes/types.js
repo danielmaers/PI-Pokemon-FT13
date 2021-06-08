@@ -1,10 +1,10 @@
 const { Router } = require('express');
+const {getAllTypes} = require("../controllers/types");
 
 const router = Router();
 
-router.get("/", (req,res)=>{
-    res.send("ruta types");
-})
+router.get("/", getAllTypes);
 
 
 module.exports = router;
+
