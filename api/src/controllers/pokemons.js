@@ -1,4 +1,5 @@
 const { Pokemon } = require('../db');
+const {v4: uuidv4} = require("uuid");
 const {BASE_URL, PKMN_URL} = require("../../constants");
 const axios = require("axios");
 
@@ -30,7 +31,7 @@ async function getPokemons(req, res, next) {
       showpkmn.push(pkmn);
       i++;
     }
-
+    
     res.send(showpkmn);
     next()
   } catch (error) {
@@ -53,25 +54,13 @@ async function getPokemonById(req, res, next){
              id: pkmnapi.id,
              height: pkmnapi.height,
              weight: pkmnapi.weight,
-             stats: [
-                 {
-                     name: pkmnapi.stats[0].stat.name,
-                     value: pkmnapi.stats[0].base_stat
-                 },
-                {
-                    name: pkmnapi.stats[1].stat.name,
-                    value: pkmnapi.stats[1].base_stat
-                },
-                {
-                    name: pkmnapi.stats[2].stat.name,
-                    value: pkmnapi.stats[2].base_stat
-                },
-                {
-                    name: pkmnapi.stats[5].stat.name,
-                    value: pkmnapi.stats[5].base_stat
+            hp: pkmnapi.stats[0].base_stat,
+            attack: pkmnapi.stats[1].base_stat,
+            defense: pkmnapi.stats[2].base_stat,
+              speed: pkmnapi.stats[5].base_stat
                 }
-            ]
-        }
+            
+        
         
         res.send(showpkmn);
 
@@ -106,25 +95,13 @@ async function getPokemonByName(req, res, next){
              id: pkmnapi.id,
              height: pkmnapi.height,
              weight: pkmnapi.weight,
-             stats: [
-                 {
-                     name: pkmnapi.stats[0].stat.name,
-                     value: pkmnapi.stats[0].base_stat
-                 },
-                {
-                    name: pkmnapi.stats[1].stat.name,
-                    value: pkmnapi.stats[1].base_stat
-                },
-                {
-                    name: pkmnapi.stats[2].stat.name,
-                    value: pkmnapi.stats[2].base_stat
-                },
-                {
-                    name: pkmnapi.stats[5].stat.name,
-                    value: pkmnapi.stats[5].base_stat
+             hp:  pkmnapi.stats[0].base_stat,
+              attack: pkmnapi.stats[1].base_stat,
+             defense: pkmnapi.stats[2].base_stat,
+             speed: pkmnapi.stats[5].base_stat
                 }
-            ]
-        }
+            
+        
         
         res.send(showpkmn);
 
@@ -139,6 +116,23 @@ async function getPokemonByName(req, res, next){
 }
 
 function addPokemon(req, res, next){
+const {name, hp, attack, defense, speed, height, weight} = req.body
+let newPokemon={
+     
+    name: name,
+    hp: hp,
+    attack: attack,
+    defense: defense,
+    speed: speed,
+    height: height,
+    weight:   weight
+}
+
+return Pokemon.create(
+{... newPokemon,
+id: uuidv4()}
+).then((pokemon)=>res.send(pokemon))
+.catch((error)=> next(error));
 
 }
 module.exports = {
