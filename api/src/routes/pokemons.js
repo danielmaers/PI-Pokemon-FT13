@@ -1,13 +1,15 @@
 const { Router } = require('express');
-const {addPokemon} = require("../controllers/pokemons");
-const axios = require("axios");
+const {getPokemons, getPokemonById, getPokemonByName, addPokemon} = require("../controllers/pokemons");
+
 
 
 const router = Router();
 
-router.get("/", (req,res)=>{
-    res.send("ruta pokemons");
-})
+router.get("/", getPokemons)
+
+router.get("/:idPokemon", getPokemonById)
+
+router.get("/", getPokemonByName)
 
 router.post("/", addPokemon)
 

@@ -34,7 +34,7 @@ async function setType(){
       }))
     }
 setType();
-console.log("db cargada")
+
 
 
 // Syncing all the models at once.
