@@ -4,6 +4,19 @@ const {BASE_URL} = require("../../constants");
 
 
 async function getAllTypes(req, res, next){ // si no funciona sacar el async
+    const type=await Type.findAll()
+    
+    if(type.length===0){
+        const apitype = await axios.get(`${BASE_URL}type`)
+    await Promise.all(apitype.data.results.map((type, index)=>{
+        let pkmntype = {
+            id: ++index,
+            name: type.name
+        }
+        Type.findOrCreate({where: pkmntype})
+    }))
+  }
+   
     return Type.findAll()
     .then((types)=>
     res.send(types))

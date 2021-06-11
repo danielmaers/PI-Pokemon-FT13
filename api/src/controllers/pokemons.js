@@ -65,19 +65,16 @@ async function getPokemonById(req, res, next){
         res.send(showpkmn);
 
     } catch (error) {
-        const pokemon = await Pokemon.findOne({ where: { id: id } });
-        if (pokemon === null) {
-          res.status(500).send('Not found!');
-        } else {
-          res.send(pokemon)
-        }
+        
+        Pokemon.findOne({ where: { id: id } })
+        .then((pokemon)=>{
+            res.send(pokemon)
+        })
+        .catch((error)=>{
+            res.status(500).send('Not found!');
+        })
+        
 
-        //  para revisar cuando este el post
-        //     if(error.response?.status=== 404){
-        //     Pokemon.findByPk(parseInt(id))
-        //     .then((pokemon)=>res.send(pokemon))
-        //     .catch((error)=> next(error))
-        // }
     }
 }
 
@@ -106,19 +103,25 @@ async function getPokemonByName(req, res, next){
         res.send(showpkmn);
 
     } catch (error) {
-        const pokemon = await Pokemon.findOne({ where: { name: name } });
-        if (pokemon === null) {
-          res.status(500).send('Not found!');
-        } else {
-          res.send(pokemon)
+        Pokemon.findOne({ where: { name: name } })
+        .then((pokemon)=>{
+            if(pokemon){
+            res.send(pokemon)
+        }else{
+            res.status(500).send('Not found!');
         }
+        })
+        .catch((error)=>{
+            next(error)
+            
+        })
     }
 }
 
 function addPokemon(req, res, next){
 const {name, hp, attack, defense, speed, height, weight} = req.body
 let newPokemon={
-     
+    id: uuidv4(),
     name: name,
     hp: hp,
     attack: attack,
@@ -128,10 +131,8 @@ let newPokemon={
     weight:   weight
 }
 
-return Pokemon.create(
-{... newPokemon,
-id: uuidv4()}
-).then((pokemon)=>res.send(pokemon))
+return Pokemon.create(newPokemon)
+.then((pokemon)=>res.send(pokemon))
 .catch((error)=> next(error));
 
 }
