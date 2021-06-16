@@ -1,17 +1,31 @@
 import React from "react";
+import {connect} from "react-redux";
+import { bindActionCreators } from "redux";
+import * as actionCreators from "../actions/actions";
 
-export default function PkmnCard(props){
+
+function PkmnCard({props}){
     return (<div>
-        <div>
-            <img src={props.img} />
+        <div className= "pkmnImg">
+            <img src={props[0].img} alt=""/>
         </div>
-        <div>
-        <p>hp: {props.hp}</p>
-        <p>attack: {props.attack}</p>
-        <p>defense: {props.defense} </p>
-        <p>speed: {props.speed}</p>
-        <p>height: {props.height}</p>
-        <p>weight: {props.weight} </p>
+        <div className="card" >
+        <div>hp: {props[0].hp}</div>
+        <div>attack: {props[0].attack}</div>
+        <div>defense: {props[0].defense} </div>
+        <div>speed: {props[0].speed}</div>
+        <div>height: {props[0].height}</div>
+        <div>weight: {props[0].weight} </div>
         </div>
     </div>);
+};
+
+const mapStateToProps = (state)=>({
+    props: state.showPokemons
+})
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators(actionCreators, dispatch);
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(PkmnCard);
