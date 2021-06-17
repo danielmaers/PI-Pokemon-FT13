@@ -1,14 +1,45 @@
-import React from "react";
-//import PkmnCard from "./pkmnCard";
+import React, {useEffect} from "react";
+import {connect} from "react-redux";
+import { bindActionCreators } from "redux";
+import * as actionCreators from "../actions/actions"
 
-export default function GetPokemonById(props){
+function GetPokemonById({getPokemonByID, pokemonById, props}){
+  
+  useEffect(()=>{
+    getPokemonByID(props)    
+}, []);
+
+let {name, image, id, height, weight, hp,attack, defense, speed } = pokemonById
+let type1=pokemonById.type[0];
+let type2=""
+if(pokemonById.type[1]){ type2=pokemonById.type[1]}
+
     return (<div>
+        <img src={image} alt=""/>
+        <div className="card" >
+        <ul>
+          <p>{name}</p>
+          <p>N° {id}</p>
+          <p>Altura {height}</p>
+          <p>Peso {weight}</p>
+          <p>Vida {hp}</p>
+          <p>Ataque {attack}</p>
+          <p>Defensa {defense}</p>
+          <p>Velocidad {speed}</p>
+          <p>Tipos {type1} {type2} </p>
+        </ul>
         
-        {/* <PkmnCard props={props}/> */}
-        {/* this.props.movies && this.props.movies.map((el, i)=>(
-            <div key= {i}>
-              <Link to={`/movie/${el.imdbID}`} >{el.Title}</Link>
-              <button onClick={() => this.props.addMovieFavorite({title: el.Title, id: el.imdbID})}>Fav</button>
-            </div> */}
+        </div>
+        
     </div>);
 }
+
+const mapStateToProps = (state)=>({
+  pokemonById: state.pokemonById
+})
+
+function mapDispatchToProps(dispatch){
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GetPokemonById);

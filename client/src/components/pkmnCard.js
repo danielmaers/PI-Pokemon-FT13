@@ -2,30 +2,19 @@ import React from "react";
 import {connect} from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "../actions/actions";
+import { Link } from 'react-router-dom';
 
-
-function PkmnCard({props}){
+function PkmnCard({img, name, type, id}){
     return (<div>
-        <div className= "pkmnImg">
-            <img src={props[0].img} alt=""/>
-        </div>
-        <div className="card" >
-        <div>hp: {props[0].hp}</div>
-        <div>attack: {props[0].attack}</div>
-        <div>defense: {props[0].defense} </div>
-        <div>speed: {props[0].speed}</div>
-        <div>height: {props[0].height}</div>
-        <div>weight: {props[0].weight} </div>
-        </div>
+        <img src={img} alt=""/>            
+        <Link to={`/pokemons/${id}`}><p>{name}</p></Link>        
+        <span>{type[0]} {type[1]}</span>        
     </div>);
 };
 
-const mapStateToProps = (state)=>({
-    props: state.showPokemons
-})
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators(actionCreators, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PkmnCard);
+export default connect(null, mapDispatchToProps)(PkmnCard);

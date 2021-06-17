@@ -1,27 +1,33 @@
-import React from "react";
-//import store from "../store/store";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
-//import axios from "axios";
-//import {PkmnCard} from "./pkmnCard"
+import PkmnCard from "./pkmnCard"
 import { bindActionCreators } from "redux";
 import * as actionCreators from "../actions/actions"
 
 
-function Pokemons({getPokemons}){
-    console.log(getPokemons())
+function Pokemons({getPokemons, showPokemons}){
+    useEffect(()=>{
+        getPokemons()
+        
+    }, []);
+    useEffect(()=>console.log(showPokemons),[showPokemons])
     return (
         <div>
-
-        {/* {
-        getPokemons()
-        // .map(pokemon=><PkmnCard props={pokemon}/>)                 
-        } */}
+            
+        <ul>
+        {showPokemons.map((pokemon, i)=>(
+        <div key= {i}>
+        <PkmnCard name={pokemon.name} type = {pokemon.type} img= {pokemon.image} id={pokemon.id}/>
+        </div>
+        ))}       
+        </ul>
+        
     </div>
     );
 }
 
 const mapStateToProps = (state)=>({
-    props: state.showPokemons
+    showPokemons: state.showPokemons
 })
 
 function mapDispatchToProps(dispatch){

@@ -24,6 +24,7 @@ async function getPokemons(req, res, next) {
     const showpkmn = [];
     while (i < 12) {
       let pkmn = {
+        id:  pkmnapi[i].id,
         image: pkmnapi[i].sprites.front_default,
         name: pkmnapi[i].name,
         type: [pkmnapi[i].types[0].type.name, pkmnapi[i].types[1]?.type.name],
