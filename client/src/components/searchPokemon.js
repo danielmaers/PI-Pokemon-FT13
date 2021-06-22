@@ -1,53 +1,65 @@
-import React from "react";
-import {connect} from "react-redux";
-//import { Link } from 'react-router-dom';
-import {getPokemonByName} from "../actions/actions";
-//import PkmnCard from "./pkmnCard";
-//import {bindActionCreators} from "redux";
-//import * as actionCreators from "../actions/actions"
+import React, {useEffect} from "react";
+import {connect, useDispatch} from "react-redux";
+import {bindActionCreators} from "redux";
+import * as actionCreators from "../actions/actions"
+import Details from "./Details";
 
 
 
-function SearchPokemon({getPokemonByName, pokemon}){
-const [state, setState]= React.useState('')
+function SearchPokemon({getPokemonByName, pokemonByName, clearPokemonByName}){
+   const dispatch = useDispatch()
+    useEffect(()=>{
+        return ()=>{
+            dispatch(clearPokemonByName())
+        }    
+    }, []);
+const [state, setState]= React.useState("")
 
 function handleChange(e){
 
 setState(e.target.value)
+
 }
 
 function handleSubmit(e){
-e.preventDeafault();
+    
+e.preventDefault();
 console.log(state)
 getPokemonByName(state);
 setState('');
+
 }
 
 return (
+    
     <div>
-        <form onSubmit={handleSubmit}>
-            <input type="text" value={state} onChange={handleChange}/>
+        {
+
+
+        }
+         <form onSubmit={(e) =>handleSubmit(e)}>
+           
+            <input type="text" value={state} onChange={(e) =>handleChange(e)}/>
             <button type="submit">Search Pokemon</button>            
         </form>
+        <div>
+          <Details detail={pokemonByName}/>
+        </div>
         
     </div>
 );
 
 };
 
-function mapDispatchToProps(dispatch){
-    return{
-        getPokemonByName: pokemon=> dispatch(getPokemonByName(pokemon))
-    }
-}
+
 
 const mapStateToProps = (state)=>({
-    pokemon: state.getPokemonByName
+    pokemonByName: state.pokemonByName
 })
 
-// function mapDispatchToProps(dispatch){
-//     return bindActionCreators(actionCreators, dispatch);
-// }
+function mapDispatchToProps(dispatch){
+    return bindActionCreators(actionCreators, dispatch);
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPokemon);
 

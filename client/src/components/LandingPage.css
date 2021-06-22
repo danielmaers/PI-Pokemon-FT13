@@ -1,0 +1,32 @@
+body {
+  background-image: url("https://pokemongolive.com/img/posts/anniversaryposter2019.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.NavLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.logo {
+  width: 700px;
+  height: 300px;
+  animation-duration: 3s;
+  animation-name: logo;
+  animation-iteration-count: infinite;
+}
+
+@keyframes logo {
+  50% {
+    width: 700px;
+    height: 300px;
+  }
+
+  50% {
+    width: 600px;
+    height: 200px;
+  }
+}

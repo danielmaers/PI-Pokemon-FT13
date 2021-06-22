@@ -1,4 +1,5 @@
-const { Pokemon } = require('../db');
+const { Pokemon, Type } = require('../db');
+
 const {v4: uuidv4} = require("uuid");
 const {BASE_URL, PKMN_URL} = require("../../constants");
 const axios = require("axios");
@@ -11,30 +12,41 @@ async function getPokemons(req, res, next) {
   }
   
     try {
-    let pkmnapi = await axios.get(`${BASE_URL}${PKMN_URL}`);
+    let pkmnapi = await axios.get(`${BASE_URL}${PKMN_URL}?offset=00&limit=41`);
     pkmnapi = pkmnapi.data.results
       .filter((element) => element.url)
       .map((element) => element.url);
     for (let index = 0; index < pkmnapi.length; index++) {
       pkmnapi[index] = await axios.get(pkmnapi[index]);
     }
-    pkmnapi = pkmnapi.map((element) => element.data);
-
-    let i = 0;
-    const showpkmn = [];
-    while (i < 12) {
-      let pkmn = {
-        id:  pkmnapi[i].id,
-        image: pkmnapi[i].sprites.front_default,
-        name: pkmnapi[i].name,
-        type: [pkmnapi[i].types[0].type.name, pkmnapi[i].types[1]?.type.name],
-      };
-      showpkmn.push(pkmn);
-      i++;
+    pkmnapi = pkmnapi.map((element) => { 
+    return  {
+            id:  element.data.id,
+            image: element.data.sprites.versions["generation-v"]["black-white"].animated.front_default,
+            name: element.data.name,
+            type1: element.data.types[0].type.name ,
+            type2:element.data.types[1]?.type.name
     }
+    });
     
-    res.send(showpkmn);
-    next()
+       
+    let dbPokemon= await Pokemon.findAll({include: Type})
+    
+    dbPokemon=dbPokemon.map((element)=>{
+        return  {
+                    id:  element.id,
+                    image: element.image,
+                    name: element.name,
+                    type1: element.types[0].name ,
+                    type2:element.types[1]?.name
+            }
+    } )
+    
+    console.log(dbPokemon)
+    pkmnapi= pkmnapi.concat(dbPokemon)
+    
+    return res.send(pkmnapi);
+    
   } catch (error) {
     next(error);
   }
@@ -49,9 +61,10 @@ async function getPokemonById(req, res, next){
                
         pkmnapi= pkmnapi.data;
          let showpkmn = {
-         image: pkmnapi.sprites.front_default,
+         image: pkmnapi.sprites.other.dream_world.front_default,
              name: pkmnapi.name,
-             type: [pkmnapi.types[0].type.name, pkmnapi.types[1]?.type.name],
+             type1: pkmnapi.types[0].type.name, 
+             type2: pkmnapi.types[1]?.type.name,
              id: pkmnapi.id,
              height: pkmnapi.height,
              weight: pkmnapi.weight,
@@ -87,9 +100,10 @@ async function getPokemonByName(req, res, next){
                
         pkmnapi= pkmnapi.data;
          let showpkmn = {
-         image: pkmnapi.sprites.front_default,
+         image: pkmnapi.other.dream_world.front_default,
              name: pkmnapi.name,
-             type: [pkmnapi.types[0].type.name, pkmnapi.types[1]?.type.name],
+             type1: pkmnapi.types[0].type.name, 
+             type2: pkmnapi.types[1]?.type.name,
              id: pkmnapi.id,
              height: pkmnapi.height,
              weight: pkmnapi.weight,
@@ -119,8 +133,8 @@ async function getPokemonByName(req, res, next){
     }
 }
 
-function addPokemon(req, res, next){
-const {name, hp, attack, defense, speed, height, weight} = req.body
+async function addPokemon(req, res, next){
+const {name, hp, attack, defense, speed, height, weight, type1,type2, image} = req.body
 let newPokemon={
     id: uuidv4(),
     name: name,
@@ -129,11 +143,17 @@ let newPokemon={
     defense: defense,
     speed: speed,
     height: height,
-    weight:   weight
-}
+    weight:   weight,
+    image: image
+        }
+    let types=[type1, type2?type2:null]
+
+
 
 return Pokemon.create(newPokemon)
-.then((pokemon)=>res.send(pokemon))
+.then((pokemon)=>{
+pokemon.addTypes(types)
+res.send({...pokemon, types})})
 .catch((error)=> next(error));
 
 }

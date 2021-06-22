@@ -36,3 +36,31 @@
     transform: rotate(360deg);
   }
 }
+
+.navBar {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.button {
+  background: linear-gradient(#f01414, #985d75);
+  color: black;
+  border-radius: 4px;
+  width: 150px;
+  height: 30px;
+  align-content: center;
+  margin: 30px black;
+  font-family: "Comfortaa";
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  border: black;
+  padding: 10px 20px;
+}
+
+/* .card {
+  display: flex;
+
+  justify-content: space-between;
+} */

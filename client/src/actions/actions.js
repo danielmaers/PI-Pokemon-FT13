@@ -1,9 +1,32 @@
 import axios from "axios";
-import { GET_POKEMONS, GET_POKEMON_BY_NAME, GET_POKEMON_BY_ID } from "./actionNames";
+import { GET_POKEMONS, GET_POKEMON_BY_NAME, GET_POKEMON_BY_ID, CREATE_POKEMON, GET_TYPES, SORT_POKEMONS } from "./actionNames";
+
+
+export function clearPokemonByName(){
+    return ({type: GET_POKEMON_BY_NAME, payload:undefined})
+
+    
+}
+
+
+export function clearPokemons(){
+    return ({type: GET_POKEMONS , payload:[]})
+
+    
+}
+
+export function getTypes(){
+    return function (dispatch){
+       return axios.get("http://localhost:3001/types")       
+       .then(response=>dispatch({type: GET_TYPES, payload:response.data})
+        )
+        .catch(error=>console.log(error))
+    }
+}
 
 export function getPokemons(){
     return function (dispatch){
-       return axios.get("http://localhost:3001/pokemons")
+       return axios.get("http://localhost:3001/pokemons")       
        .then(response=>dispatch({type: GET_POKEMONS, payload:response.data})
         )
         .catch(error=>console.log(error))
@@ -23,11 +46,48 @@ export function getPokemonByName(name){
 
 export function getPokemonByID(id){
     return (dispatch)=>{
-        axios.get(`http://localhost:3001/pokemons/${id}`)
+      return  axios.get(`http://localhost:3001/pokemons/${id}`)
         .then((response)=>{
-            console.log(response)
+            
             dispatch({type: GET_POKEMON_BY_ID, payload: response.data})
         })
         .catch(error=>console.log(error))
     }       
 }
+
+export const createPokemon=(pokemon)=>{
+    return (dispatch)=>{
+        return axios.post(`http://localhost:3001/pokemons`,pokemon)
+      .then((response)=>
+      dispatch({type: CREATE_POKEMON, payload:response.data})
+      )
+      ;
+    }
+  }
+
+
+
+    // export function sortPokemons(){
+     
+     
+    //     pokeArray.sort(function (a, b) {
+    //         if (a.name > b.name) {
+    //           return 1;
+    //         }
+    //         if (a.name < b.name) {
+    //           return -1;
+    //         }
+    //         // a must be equal to b
+    //         return 0;
+    //       });
+    //       return {
+    //         type: SORT_POKEMONS,
+    //         payload: pokeArray }
+        
+         
+       
+       
+        
+    
+
+    

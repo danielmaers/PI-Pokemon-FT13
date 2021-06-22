@@ -1,23 +1,34 @@
 import React, {useEffect} from "react";
-import {connect} from "react-redux";
+import "./pokemons.css";
+import {connect, useDispatch} from "react-redux";
 import PkmnCard from "./pkmnCard"
 import { bindActionCreators } from "redux";
 import * as actionCreators from "../actions/actions"
+// "descending"
+// "ascending"
 
 
-function Pokemons({getPokemons, showPokemons}){
+function Pokemons({getPokemons, showPokemons,clearPokemons}){
+
+    const dispatch = useDispatch()
+    
     useEffect(()=>{
         getPokemons()
-        
+        return ()=>{
+            dispatch(clearPokemons())
+        }   
     }, []);
-    useEffect(()=>console.log(showPokemons),[showPokemons])
+
+    
+    
     return (
-        <div>
+        <div className="pokegrid">
             
         <ul>
+            {console.log(showPokemons)}
         {showPokemons.map((pokemon, i)=>(
-        <div key= {i}>
-        <PkmnCard name={pokemon.name} type = {pokemon.type} img= {pokemon.image} id={pokemon.id}/>
+        <div key= {i} className="card"> 
+        <PkmnCard name={pokemon.name} type1 = {pokemon.type1} type2 = {pokemon.type2} img= {pokemon.image} id={pokemon.id}/>
         </div>
         ))}       
         </ul>

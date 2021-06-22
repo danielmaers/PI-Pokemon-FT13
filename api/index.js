@@ -23,7 +23,23 @@ const { Type } = require('./src/db');
 const {BASE_URL} = require("./constants")
 const axios = require("axios");
 
+let CreateDataBase = async () => {
+   
+  
+  
+      const apitype = await axios.get(`${BASE_URL}type`)
+  await Promise.all(apitype.data.results.map((type, index)=>{
+      let pkmntype = {
+          id: ++index,
+          name: type.name
+      }
+      Type.findOrCreate({where: pkmntype})
+  }))
+}
+ 
 
+
+CreateDataBase();
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
