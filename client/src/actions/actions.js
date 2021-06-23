@@ -6,6 +6,7 @@ import {
   CREATE_POKEMON,
   GET_TYPES,
   SORT_POKEMONS,
+  FILTER_POKEMONS,
 } from "./actionNames";
 
 export function clearPokemonByName() {
@@ -93,7 +94,6 @@ export function sortPokemons(pokemons, order, typeOrder) {
       return 0;
     });
   } else if (order === "attack" && typeOrder === "ascending") {
-    console.log(pokemons);
     pokemons.sort(function (a, b) {
       return a.attack - b.attack;
     });
@@ -109,4 +109,17 @@ export function sortPokemons(pokemons, order, typeOrder) {
   };
 }
 
-export function pokemonFilter(pokemons) {}
+export function pokemonFilter(pokemons, filter) {
+  var filtered = [];
+  if (filter === "database") {
+    filtered = pokemons.filter((e) => typeof e.id !== "number");
+  } else if (filter === "api") {
+    filtered = pokemons.filter((e) => typeof e.id === "number");
+  } else {
+    filtered = pokemons.filter((e) => e.type1 === filter || e.type2 === filter);
+  }
+  return {
+    type: FILTER_POKEMONS,
+    payload: filtered,
+  };
+}

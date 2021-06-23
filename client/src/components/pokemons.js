@@ -14,6 +14,7 @@ function Pokemons({
   getTypes,
   types,
   sortPokemons,
+  pokemonFilter,
 }) {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,6 +39,11 @@ function Pokemons({
   const indexOfLastPkmn = currentPage * pkmnPerPage;
   const indexOfFirstPkmn = indexOfLastPkmn - pkmnPerPage;
   const currentPkmns = showPokemons.slice(indexOfFirstPkmn, indexOfLastPkmn);
+  // if (filtered !== []) {
+  //   currentPkmns = filtered.slice(indexOfFirstPkmn, indexOfLastPkmn);
+  // } else {
+  //   currentPkmns = showPokemons.slice(indexOfFirstPkmn, indexOfLastPkmn);
+  // }
 
   //CHANGE PAGE
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -62,7 +68,12 @@ function Pokemons({
     setFilter(e.target.value);
   }
 
-  function submitFilter(e) {}
+  function submitFilter(e) {
+    e.preventDefault();
+    pokemonFilter(showPokemons, filter);
+
+    setCurrentPage(1);
+  }
 
   return (
     <div className="pokegrid">
@@ -103,7 +114,7 @@ function Pokemons({
           <option value="api" selected>
             From Api
           </option>
-          {console.log(types)}
+
           {types &&
             types.map((types, i) => (
               <option key={i} value={types.name}>

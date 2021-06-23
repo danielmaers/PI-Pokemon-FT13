@@ -5,6 +5,7 @@ import {
   CREATE_POKEMON,
   GET_TYPES,
   SORT_POKEMONS,
+  FILTER_POKEMONS,
 } from "../actions/actionNames";
 
 const initialState = {
@@ -47,7 +48,11 @@ function reducer(state = initialState, action) {
         ...state,
         showPokemons: action.payload,
       };
-
+    case FILTER_POKEMONS:
+      return {
+        ...state,
+        showPokemons: action.payload,
+      };
     default: {
       return state;
     }

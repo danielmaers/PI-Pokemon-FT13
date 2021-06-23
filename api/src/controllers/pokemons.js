@@ -4,12 +4,25 @@ const { v4: uuidv4 } = require("uuid");
 const { BASE_URL, PKMN_URL } = require("../../constants");
 const axios = require("axios");
 
-function getPokemons(req, res, next) {
+async function getPokemons(req, res, next) {
   if (req.query.name) {
     return next();
   }
 
   try {
+    let dbPokemon = await Pokemon.findAll({ include: Type });
+
+    dbPokemon = dbPokemon.map((element) => {
+      return {
+        id: element.dataValues.id,
+        image: element.dataValues.image,
+        name: element.dataValues.name,
+        attack: element.dataValues.attack,
+        type1: element.dataValues.types[0].name,
+        type2: element.dataValues.types[1]?.name,
+      };
+    });
+
     let pokemonsPendingPromises = [];
     for (let i = 1; i <= 40; i++) {
       pokemonsPendingPromises.push(axios.get(`${BASE_URL}${PKMN_URL}/${i}`));
@@ -29,7 +42,9 @@ function getPokemons(req, res, next) {
             type2: element.data.types[1]?.type.name,
           };
         });
-        console.log(pokemonsArray);
+
+        pokemonsArray = pokemonsArray.concat(dbPokemon);
+
         res.send(pokemonsArray);
       })
       .catch((error) => {
