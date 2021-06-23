@@ -42,7 +42,7 @@ async function getPokemons(req, res, next) {
             }
     } )
     
-    console.log(dbPokemon)
+    
     pkmnapi= pkmnapi.concat(dbPokemon)
     
     return res.send(pkmnapi);
@@ -80,7 +80,7 @@ async function getPokemonById(req, res, next){
 
     } catch (error) {
         
-        Pokemon.findOne({ where: { id: id } })
+        Pokemon.findByPk(id,{include: Type})
         .then((pokemon)=>{
             res.send(pokemon)
         })
@@ -94,13 +94,14 @@ async function getPokemonById(req, res, next){
 
 async function getPokemonByName(req, res, next){
     const name = req.query.name;
-    try {
-        
-        let pkmnapi= await axios.get(`${BASE_URL}${PKMN_URL}/${name}/`);
-               
+    
+    
+    try {        
+        let pkmnapi= await axios.get(`${BASE_URL}${PKMN_URL}/${name}/`);               
         pkmnapi= pkmnapi.data;
+        
          let showpkmn = {
-         image: pkmnapi.other.dream_world.front_default,
+         image: pkmnapi.sprites.other.dream_world.front_default,
              name: pkmnapi.name,
              type1: pkmnapi.types[0].type.name, 
              type2: pkmnapi.types[1]?.type.name,
@@ -113,14 +114,17 @@ async function getPokemonByName(req, res, next){
              speed: pkmnapi.stats[5].base_stat
                 }
             
-        
+               
         
         res.send(showpkmn);
 
     } catch (error) {
-        Pokemon.findOne({ where: { name: name } })
+        
+        
+        Pokemon.findOne({ where: { name: name }, include: Type  })
         .then((pokemon)=>{
             if(pokemon){
+            
             res.send(pokemon)
         }else{
             res.status(500).send('Not found!');

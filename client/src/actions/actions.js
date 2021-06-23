@@ -35,7 +35,7 @@ export function getPokemons(){
 
 export function getPokemonByName(name){
     return (dispatch)=>{
-       return axios.get(`http://localhost:3001/pokemons/${name}`)  
+       return axios.get(`http://localhost:3001/pokemons?name=${name}`)  
         .then((response)=>{
             console.log(response)
             dispatch({type: GET_POKEMON_BY_NAME, payload: response.data})
@@ -67,22 +67,57 @@ export const createPokemon=(pokemon)=>{
 
 
 
-    // export function sortPokemons(){
-     
-     
-    //     pokeArray.sort(function (a, b) {
-    //         if (a.name > b.name) {
-    //           return 1;
-    //         }
-    //         if (a.name < b.name) {
-    //           return -1;
-    //         }
-    //         // a must be equal to b
-    //         return 0;
-    //       });
-    //       return {
-    //         type: SORT_POKEMONS,
-    //         payload: pokeArray }
+export function sortPokemons(pokemons, order, typeOrder){
+        if(order==="alphabetic" && typeOrder==="ascending"){
+            pokemons.sort(function (a, b) {
+                        if (a.name > b.name) {
+                          return 1;
+                        }
+                        if (a.name < b.name) {
+                          return -1;
+                        }
+                       
+                        return 0;
+                      });
+        }else if(order==="alphabetic" && typeOrder==="descending"){
+            pokemons.sort(function (a, b) {
+                if (a.name < b.name) {
+                  return 1;
+                }
+                if (a.name > b.name) {
+                  return -1;
+                }
+               
+                return 0;
+              });
+
+        }else if(order==="attack" && typeOrder==="ascending"){
+            pokemons.sort(function (a, b) {
+                if (a.attack > b.attack) {
+                  return 1;
+                }
+                if (a.attack < b.attack) {
+                  return -1;
+                }
+               
+                return 0;
+              });
+        }else if(order==="attack" && typeOrder==="descending"){
+            pokemons.sort(function (a, b) {
+                if (a.attack < b.attack) {
+                  return 1;
+                }
+                if (a.attack > b.attack) {
+                  return -1;
+                }
+               
+                return 0;
+              });
+        }    
+        return {
+            type: SORT_POKEMONS,
+            payload: pokemons }
+        }
         
          
        

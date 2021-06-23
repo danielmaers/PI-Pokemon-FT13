@@ -34,7 +34,7 @@ function reducer(state= initialState, action){
             case GET_TYPES:
                 return{
                     ...state,
-                    type: action.payload
+                    types: action.payload
                 }  
                 case SORT_POKEMONS:
             return {

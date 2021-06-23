@@ -9,7 +9,7 @@ router.get("/", getPokemons)
 
 router.get("/:idPokemon", getPokemonById)
 
-router.get("/", getPokemonByName)
+router.get("", getPokemonByName)
 
 router.post("/", addPokemon)
 
