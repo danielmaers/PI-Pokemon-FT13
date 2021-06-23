@@ -55,7 +55,9 @@
   font-weight: bold;
   text-decoration: none;
   text-align: center;
-  border: black;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
   padding: 10px 20px;
 }
 

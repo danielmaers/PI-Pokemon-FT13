@@ -11,14 +11,14 @@ async function getPokemons(req, res, next) {
 
   try {
     let dbPokemon = await Pokemon.findAll({ include: Type });
-
+    console.log(dbPokemon);
     dbPokemon = dbPokemon.map((element) => {
       return {
         id: element.dataValues.id,
         image: element.dataValues.image,
         name: element.dataValues.name,
         attack: element.dataValues.attack,
-        type1: element.dataValues.types[0].name,
+        type1: element.dataValues.types[0]?.name,
         type2: element.dataValues.types[1]?.name,
       };
     });

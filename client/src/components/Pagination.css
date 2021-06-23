@@ -1,0 +1,8 @@
+.page-link {
+  text-decoration: underline;
+  color: blue;
+}
+.page-link:hover {
+  color: red;
+  cursor: pointer;
+}

@@ -70,6 +70,7 @@ function Pokemons({
 
   function submitFilter(e) {
     e.preventDefault();
+
     pokemonFilter(showPokemons, filter);
 
     setCurrentPage(1);

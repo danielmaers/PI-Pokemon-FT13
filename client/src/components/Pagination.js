@@ -1,4 +1,6 @@
 import React from "react";
+import "./Pagination.css";
+
 const Pagination = ({ pkmnPerPage, totalPkmn, paginate }) => {
   const pageNumbers = [];
 
@@ -10,7 +12,6 @@ const Pagination = ({ pkmnPerPage, totalPkmn, paginate }) => {
     <nav>
       <ul className="pagination">
         {pageNumbers.map((number) => (
-          // <li key={number} className="page">
           <span
             key={number}
             onClick={() => {
@@ -21,7 +22,6 @@ const Pagination = ({ pkmnPerPage, totalPkmn, paginate }) => {
           >
             {` ${number}`}
           </span>
-          // </li>
         ))}
       </ul>
     </nav>

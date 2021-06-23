@@ -1,7 +1,15 @@
 .details {
-  background-color: green;
-  width: 300px;
   display: flex;
+  background-image: url("https://w.wallpaperkiss.com/wimg/s/166-1667414_small.jpg");
+
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: auto;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black,
+    1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
 }

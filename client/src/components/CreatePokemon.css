@@ -1,0 +1,20 @@
+.createForm {
+  display: flex;
+  width: fit-content;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.danger {
+  border: red 1px solid;
+}
+.error {
+  color: red;
+  text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black,
+    1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
