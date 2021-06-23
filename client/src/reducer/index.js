@@ -14,6 +14,7 @@ const initialState = {
   pokemonByName: null,
   createPokemon: {},
   types: [],
+  filtered: [],
 };
 
 function reducer(state = initialState, action) {

@@ -34,14 +34,14 @@ function Details({ detail }) {
         <ul>
           <p>{name}</p>
           <p>N° {id}</p>
-          <p>Altura {height}</p>
-          <p>Peso {weight}</p>
-          <p>Vida {hp}</p>
-          <p>Ataque {attack}</p>
-          <p>Defensa {defense}</p>
-          <p>Velocidad {speed}</p>
+          <p>Height {height}</p>
+          <p>Weight {weight}</p>
+          <p>Health {hp}</p>
+          <p>Attack {attack}</p>
+          <p>Defense {defense}</p>
+          <p>Speed {speed}</p>
           <p>
-            Tipos {type1 ? type1 : null} {type2 ? type2 : null}{" "}
+            Types {type1 ? type1 : null} {type2 ? type2 : null}{" "}
           </p>
         </ul>
       </div>

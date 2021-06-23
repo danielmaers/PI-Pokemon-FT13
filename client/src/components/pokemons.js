@@ -16,7 +16,6 @@ function Pokemons({
   sortPokemons,
   pokemonFilter,
 }) {
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pkmnPerPage] = useState(12);
   const [order, setOrder] = useState("");
@@ -26,10 +25,8 @@ function Pokemons({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setLoading(true);
     getPokemons();
     getTypes();
-    setLoading(false);
     return () => {
       dispatch(clearPokemons());
     };
@@ -39,11 +36,6 @@ function Pokemons({
   const indexOfLastPkmn = currentPage * pkmnPerPage;
   const indexOfFirstPkmn = indexOfLastPkmn - pkmnPerPage;
   const currentPkmns = showPokemons.slice(indexOfFirstPkmn, indexOfLastPkmn);
-  // if (filtered !== []) {
-  //   currentPkmns = filtered.slice(indexOfFirstPkmn, indexOfLastPkmn);
-  // } else {
-  //   currentPkmns = showPokemons.slice(indexOfFirstPkmn, indexOfLastPkmn);
-  // }
 
   //CHANGE PAGE
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -129,7 +121,7 @@ function Pokemons({
         </button>
       </form>
       <ul>
-        <Mapping pokemons={currentPkmns} loading={loading} />
+        <Mapping pokemons={currentPkmns} />
 
         <Pagination
           pkmnPerPage={pkmnPerPage}

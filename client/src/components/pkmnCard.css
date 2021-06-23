@@ -1,11 +1,17 @@
 .card {
   display: flex;
   width: 100px;
+  height: 167px;
   flex-direction: column;
-  background-color: #65c265;
+  background-image: url("../adds/fondo_verde2.png");
+  background-size: cover;
+  font-weight: bold;
   border: 300 200;
-  justify-content: space-between;
+  justify-content: space-around;
   margin: 10px;
   align-items: center;
   border-radius: 4px;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
 }

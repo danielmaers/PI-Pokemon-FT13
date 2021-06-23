@@ -1,12 +1,9 @@
 .pokegrid {
   display: grid;
-  grid-template-columns: 20% 20% 20% 20% 20%;
-  grid-template-rows: 20% 20% 20% 20% 20%;
-}
-
-.card {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-column-start: 1;
   grid-column-end: 5;
+  list-style-type: none;
 }
 
 .lds-spinner {
