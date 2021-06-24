@@ -59,8 +59,12 @@ function CreatePokemon({ getTypes, types, createPokemon }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    createPokemon(state);
-    alert("pokemon creado");
+    if (state.name !== " ") {
+      createPokemon(state);
+      alert("pokemon creado");
+    } else {
+      alert("No se pudo crear. Revisar los datos ingresados");
+    }
     return;
   }
 
@@ -74,7 +78,7 @@ function CreatePokemon({ getTypes, types, createPokemon }) {
   const { speed } = state.speed;
   const { type1 } = state.type1;
   const { type2 } = state.type2;
-
+  console.log(state);
   return (
     <div className="container">
       <form type="submit" className="createForm">
