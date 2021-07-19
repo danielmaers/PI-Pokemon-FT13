@@ -8,7 +8,7 @@ import LandingPage from "./components/LandingPage";
 import CreatePokemon from "./components/CreatePokemon";
 import { Route } from "react-router";
 
-export const url = process.env.REACT_APP_API || "http://localhost:3001";
+export const url = process.env.REACT_APP_POKEAPP || "http://localhost:3001";
 
 function App() {
   return (
