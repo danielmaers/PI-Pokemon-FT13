@@ -11,7 +11,22 @@ const server = express();
 
 server.name = "API";
 
-server.use(cors());
+//server.use(cors());
+server.use(
+  cors({
+    origin: "*",
+    credentials: true,
+    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Accept",
+      "authorization",
+    ],
+  })
+);
+
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
