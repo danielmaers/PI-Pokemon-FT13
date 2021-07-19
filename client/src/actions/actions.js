@@ -8,6 +8,7 @@ import {
   SORT_POKEMONS,
   FILTER_POKEMONS,
 } from "./actionNames";
+import { url } from "../App";
 
 export function clearPokemonByName() {
   return { type: GET_POKEMON_BY_NAME, payload: undefined };
@@ -20,7 +21,7 @@ export function clearPokemons() {
 export function getTypes() {
   return function (dispatch) {
     return axios
-      .get("http://localhost:3001/types")
+      .get(`${url}/types`)
       .then((response) => dispatch({ type: GET_TYPES, payload: response.data }))
       .catch((error) => console.log(error));
   };
@@ -29,7 +30,7 @@ export function getTypes() {
 export function getPokemons() {
   return function (dispatch) {
     return axios
-      .get("http://localhost:3001/pokemons")
+      .get(`${url}/pokemons`)
       .then((response) =>
         dispatch({ type: GET_POKEMONS, payload: response.data })
       )
@@ -40,7 +41,7 @@ export function getPokemons() {
 export function getPokemonByName(name) {
   return (dispatch) => {
     return axios
-      .get(`http://localhost:3001/pokemons?name=${name}`)
+      .get(`${url}/pokemons?name=${name}`)
       .then((response) => {
         console.log(response);
         dispatch({ type: GET_POKEMON_BY_NAME, payload: response.data });
@@ -52,7 +53,7 @@ export function getPokemonByName(name) {
 export function getPokemonByID(id) {
   return (dispatch) => {
     return axios
-      .get(`http://localhost:3001/pokemons/${id}`)
+      .get(`${url}/pokemons/${id}`)
       .then((response) => {
         dispatch({ type: GET_POKEMON_BY_ID, payload: response.data });
       })
@@ -63,7 +64,7 @@ export function getPokemonByID(id) {
 export const createPokemon = (pokemon) => {
   return (dispatch) => {
     return axios
-      .post(`http://localhost:3001/pokemons`, pokemon)
+      .post(`${url}/pokemons`, pokemon)
       .then((response) =>
         dispatch({ type: CREATE_POKEMON, payload: response.data })
       );
