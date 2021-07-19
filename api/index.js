@@ -39,8 +39,15 @@ let CreateDataBase = async () => {
 CreateDataBase();
 
 // Syncing all the models at once.
+// conn.sync({ force: false }).then(() => {
+//   server.listen(3001, () => {
+//     console.log("%s listening at 3001"); // eslint-disable-line no-console
+//   });
+// });
+
 conn.sync({ force: false }).then(() => {
-  server.listen(3001, () => {
-    console.log("%s listening at 3001"); // eslint-disable-line no-console
+  // server.listen(3000, async () => {
+  server.listen(process.env.PORT, async () => {
+    console.log(`listening at PORT ${process.env.PORT}`);
   });
 });
