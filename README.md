@@ -1,3 +1,7 @@
+## Deployed Proyect
+
+https://etheriongaming-pokemon-app-6yw89k5o1-danielmaers.vercel.app/
+
 <p>Preview</p>
 <p>
     <img src='./pokeapilandingpgae.gif' </img>
