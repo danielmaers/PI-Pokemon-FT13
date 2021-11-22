@@ -3,7 +3,7 @@ const { Pokemon, Type } = require("../db");
 const { v4: uuidv4 } = require("uuid");
 const { BASE_URL, PKMN_URL } = require("../../constants");
 const axios = require("axios");
-
+//esto es un comentario
 async function getPokemons(req, res, next) {
   if (req.query.name) {
     return next();
