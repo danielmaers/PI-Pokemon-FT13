@@ -3,7 +3,7 @@
   width: 100px;
   height: 167px;
   flex-direction: column;
-  background-image: url("../adds/fondo_verde2.png");
+  background-image: url("fondo_verde2.png");
   background-size: cover;
   font-weight: bold;
   border: 300 200;
