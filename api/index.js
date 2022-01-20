@@ -45,7 +45,7 @@ CreateDataBase();
 //   });
 // });
 
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
   // server.listen(3000, async () => {
   server.listen(process.env.PORT, async () => {
     console.log(`listening at PORT ${process.env.PORT}`);
