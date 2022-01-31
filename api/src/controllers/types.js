@@ -1,7 +1,7 @@
 const { Type } = require('../db');
 
 
-//otro comentario
+//comentario de prueba para el grupo 01
 async function getAllTypes(req, res, next){ 
 
    
